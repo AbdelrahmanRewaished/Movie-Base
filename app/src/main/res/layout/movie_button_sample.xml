@@ -40,21 +40,19 @@
 
         <RatingBar
             android:id="@+id/ratingBar"
-            android:layout_width="100dp"
-            android:layout_height="44dp"
+            style="@style/Widget.AppCompat.RatingBar.Small"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
             android:isIndicator="true"
-            android:numStars="5"
-            style="@android:attr/ratingBarStyleSmall"
+            android:progressTint="#ebc334"
+            android:stepSize="0.5"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.275"
+            app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView_button_sample"
-            app:layout_constraintVertical_bias="0.0"
-            android:layout_marginTop="15dp"
-            android:layout_marginLeft="40dp"
-            android:progressTint="#ebc334"
-            />
+            app:layout_constraintVertical_bias="0.0" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

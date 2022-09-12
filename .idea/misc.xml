@@ -3,6 +3,9 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/pc/AndroidStudioProjects/Movies-App/app/src/main/res/layout/activity_introductory.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/pc/AndroidStudioProjects/Movies-App/app/src/main/res/layout/movie_button_sample.xml" value="0.33" />
+        <entry key="..\:/Users/pc/AndroidStudioProjects/Movies-App/app/src/main/res/xml/style.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/user/AndroidStudioProjects/MoviesApp/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.1895" />
         <entry key="..\:/Users/user/AndroidStudioProjects/MoviesApp/app/src/main/res/drawable/ic_launcher_background.xml" value="0.1895" />
         <entry key="..\:/Users/user/AndroidStudioProjects/MoviesApp/app/src/main/res/layout/activity_introductory.xml" value="0.18802083333333333" />
@@ -19,7 +22,7 @@
       <writeAnnotation name="com.google.gson.annotations.SerializedName" />
     </writeAnnotations>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="11" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">
