@@ -1,8 +1,9 @@
 package com.example.moviesapp.views;
 
-import static android.os.Build.VERSION_CODES.R;
-
+import android.annotation.SuppressLint;
+import android.app.Application;
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,10 +16,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.moviesapp.Movie;
-import com.example.moviesapp.R.*;
+import com.example.moviesapp.R.id;
+import com.example.moviesapp.R.layout;
 
 import java.util.List;
 
+@SuppressWarnings("ALL")
 public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
 
     private List<Movie> movies;
@@ -32,10 +35,10 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(layout.movie_button_sample, parent, false);
-        ViewHolder viewHolder = new ViewHolder(v);
-        return viewHolder;
+        return new ViewHolder(v);
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Movie current_movie = movies.get(position);
@@ -43,7 +46,13 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
         Glide.with(context)
                 .load("https://image.tmdb.org/t/p/w500/" + current_movie.getPoster_path())
                 .into(holder.imageButton);
-        holder.textView.setText(current_movie.getTitle());
+        holder.imageButton.setOnClickListener(v -> {
+            MovieOverview.setFields(current_movie);
+            Intent intent = new Intent(context, MovieOverview.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            context.startActivity(intent);
+        });
+        holder.textView.setText(current_movie.getTitle() + "\n(" + current_movie.getRelease_date().split("-")[0] + ")");
         holder.ratingBar.setRating(current_movie.getVote_average());
     }
 
@@ -52,7 +61,9 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
         return movies.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+
+
+    public static class ViewHolder extends RecyclerView.ViewHolder {
 
         public ImageButton imageButton;
         public TextView textView;

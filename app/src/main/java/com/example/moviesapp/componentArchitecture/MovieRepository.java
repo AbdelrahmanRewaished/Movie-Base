@@ -1,19 +1,14 @@
 package com.example.moviesapp.componentArchitecture;
 
 import android.content.Context;
-import android.widget.ProgressBar;
-import android.widget.TextView;
 
 import com.example.moviesapp.Movie;
 import com.example.moviesapp.database.MovieDao;
 import com.example.moviesapp.database.MovieDatabase;
 import com.example.moviesapp.movieapi.MovieAPI;
 import com.example.moviesapp.movieapi.MovieJSONResponse;
-import com.example.moviesapp.views.MainActivity;
 
-import java.io.File;
 import java.util.List;
-import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Future;
@@ -43,31 +38,17 @@ public class MovieRepository {
     }
 
     public void insert(Movie movie) {
-        thread.execute(new Runnable() {
-            @Override
-            public void run() {
-                movieDao.insert(movie);
-            }
-        });
+        thread.execute(() -> movieDao.insert(movie));
     }
 
     public List<Movie> getAllMovies() {
-        Future<List<Movie>> future = thread.submit(new Callable<List<Movie>>() {
-            @Override
-            public List<Movie> call() throws Exception {
-                return movieDao.getAllMovies();
-            }
-        });
+        Future<List<Movie>> future = thread.submit(() -> movieDao.getAllMovies());
         try {
             return future.get();
         } catch (ExecutionException | InterruptedException e) {
             e.printStackTrace();
         }
         return null;
-    }
-
-    public List<Movie> getMoviesWithTitle(String title) {
-        return movieDao.getMoviesWithTitle(title);
     }
 
     private void callMovieAPI() {
