@@ -41,7 +41,7 @@ public class MovieOverview extends AppCompatActivity {
         title = movie.getTitle() + "\n(" + movie.getRelease_date().split("-")[0] + ")";
         overview = movie.getOverview();
         poster_path = "https://image.tmdb.org/t/p/w500/" + movie.getPoster_path();
-        rating = movie.getVote_average();
+        rating = movie.getVote_average() / 2;
     }
 
     private void setUI() {

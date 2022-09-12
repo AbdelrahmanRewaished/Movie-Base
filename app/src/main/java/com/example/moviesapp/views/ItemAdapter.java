@@ -53,7 +53,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
             context.startActivity(intent);
         });
         holder.textView.setText(current_movie.getTitle() + "\n(" + current_movie.getRelease_date().split("-")[0] + ")");
-        holder.ratingBar.setRating(current_movie.getVote_average());
+        holder.ratingBar.setRating(current_movie.getVote_average() / 2);
     }
 
     @Override
