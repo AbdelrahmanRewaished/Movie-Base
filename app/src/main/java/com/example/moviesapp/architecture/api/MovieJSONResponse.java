@@ -1,6 +1,6 @@
-package com.example.moviesapp.movieapi;
+package com.example.moviesapp.architecture.api;
 
-import com.example.moviesapp.Movie;
+import com.example.moviesapp.architecture.models.Movie;
 import com.google.gson.annotations.SerializedName;
 
 public class MovieJSONResponse {
@@ -12,4 +12,7 @@ public class MovieJSONResponse {
         return movies;
     }
 
+    public void setMovies(Movie[] movies) {
+        this.movies = movies;
+    }
 }

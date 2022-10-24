@@ -1,99 +1,109 @@
 package com.example.moviesapp.views;
 
-import android.annotation.SuppressLint;
-import android.content.Context;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.View;
-import android.widget.EditText;
+import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ProgressBar;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.paging.PagedList;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.moviesapp.Movie;
 import com.example.moviesapp.R;
-import com.example.moviesapp.componentArchitecture.MovieViewModel;
+import com.example.moviesapp.architecture.ViewModel;
+import com.example.moviesapp.architecture.models.Stream;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @SuppressWarnings("FieldCanBeLocal")
-public class MainActivity extends AppCompatActivity implements TextWatcher{
+public class MainActivity extends AppCompatActivity{
 
-    private static List<Movie> movies;
-    private Context context;
-    private static MovieViewModel movieViewModel;
-    private RecyclerView recyclerView;
-    private ItemAdapter adapter;
-    private RecyclerView.LayoutManager layoutManager;
+    private ViewModel viewModel;
     private ImageButton imageButton;
-    private EditText search;
+    private TextView watchNow;
+
+    private TextView errorText;
+    private Button retryConnection;
+    private ProgressBar loadingBar;
+    private RecyclerView mainRecyclerView;
+
+    private List<DisplaySample> displaySampleList;
+    private List<SubAdapter> subAdapters;
+    private static final int STREAM_SAMPLE_SIZE = 7;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        context = getApplicationContext();
-        movies = movieViewModel.getAllMovies();
+        initializeViews();
 
+        viewModel = new ViewModelProvider(this).get(ViewModel.class);
+        Overview.setMovieViewModel(viewModel);
+
+        subAdapters = new ArrayList<>();
+        displaySampleList = new ArrayList<>();
+        setStreams();
+        buildMainRecyclerView();
+
+//        if(! viewModel.isSuccessfulConnection()) {
+//            Toast.makeText(this, "Bad Connection !!!", Toast.LENGTH_SHORT).show();
+//        }
+    }
+
+    private void initializeViews() {
         imageButton = findViewById(R.id.imageButton2);
-        search = findViewById(R.id.editText);
-        recyclerView = findViewById(R.id.recyclerView);
-
-        buildRecyclerView();
-
-        imageButton.setOnClickListener(v -> search.setVisibility(View.VISIBLE));
-        search.setVisibility(View.INVISIBLE);
-        search.addTextChangedListener(this);
+        watchNow = findViewById(R.id.watch_now_text);
+        errorText = findViewById(R.id.error_text);
+        retryConnection = findViewById(R.id.button_retry);
+        loadingBar = findViewById(R.id.main_loading_bar);
+        mainRecyclerView = findViewById(R.id.mainRecyclerView);
     }
 
-    static void setMovieViewModel(MovieViewModel viewModel) {
-        movieViewModel = viewModel;
-    }
-    private void buildRecyclerView() {
-
-        layoutManager = new GridLayoutManager(this, 2);
-        recyclerView.setLayoutManager(layoutManager);
-        adapter = new ItemAdapter(movies, context);
-        recyclerView.setAdapter(adapter);
-    }
-
-    @Override
-    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-    }
-
-    @Override
-    public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-    }
-
-    @Override
-    public void afterTextChanged(Editable s) {
-        updateRecyclerView(s.toString());
-    }
-
-
-    @SuppressLint("NotifyDataSetChanged")
-    private void updateRecyclerView(String s) {
-        List<Movie> current_set_movies = getMoviesWithTitle(s);
-        movies.clear();
-        movies.addAll(current_set_movies);
-        adapter.notifyDataSetChanged();
-    }
-
-    private List<Movie> getMoviesWithTitle(String title) {
-        List<Movie> targeted_movies = new ArrayList<>();
-        title = title.toLowerCase();
-        for(Movie movie: movieViewModel.getAllMovies()) {
-            String movie_title = movie.getTitle().toLowerCase();
-            if(movie_title.startsWith(title)) {
-                targeted_movies.add(movie);
-            }
+    private void setViews(boolean failing_connection) {
+        loadingBar.setVisibility(View.GONE);
+        if(! failing_connection) {
+            watchNow.setVisibility(View.VISIBLE);
+            imageButton.setVisibility(View.VISIBLE);
+            return;
         }
-        return targeted_movies;
+        errorText.setVisibility(View.VISIBLE);
+        retryConnection.setVisibility(View.VISIBLE);
+        watchNow.setVisibility(View.GONE);
+        imageButton.setVisibility(View.GONE);
     }
+
+    private void setStreams() {
+//        displaySampleList.add(new DisplaySample('M', "latest"));
+        displaySampleList.add(new DisplaySample('M', "now_playing"));
+        displaySampleList.add(new DisplaySample('M', "popular"));
+        displaySampleList.add(new DisplaySample('M', "top_rated"));
+        displaySampleList.add(new DisplaySample('M', "upcoming"));
+        displaySampleList.add(new DisplaySample('T', "airing_today"));
+        displaySampleList.add(new DisplaySample('T', "popular"));
+        displaySampleList.add(new DisplaySample('T', "top_rated"));
+
+        for (int i = 0; i < STREAM_SAMPLE_SIZE; i++) {
+            SubAdapter adapter = new SubAdapter(getApplicationContext());
+            char streamType = displaySampleList.get(i).getStreamType().charAt(0);
+            String streamState = displaySampleList.get(i).getStreamStateOriginal();
+            viewModel.addPagedList(streamType, streamState).observe(this, (Observer<PagedList<Stream>>) adapter::submitList);
+            subAdapters.add(adapter);
+        }
+    }
+
+    private void buildMainRecyclerView() {
+        mainRecyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false));
+        mainRecyclerView.setHasFixedSize(true);
+        MainAdapter mainAdapter = new MainAdapter(getApplicationContext(), displaySampleList, subAdapters);
+        mainRecyclerView.setAdapter(mainAdapter);
+        mainAdapter.notifyDataSetChanged();
+    }
+
 }

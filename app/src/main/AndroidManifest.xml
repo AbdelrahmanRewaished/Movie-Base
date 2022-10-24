@@ -26,7 +26,7 @@
         </activity>
 
         <activity
-            android:name=".views.MovieOverview"
+            android:name=".views.Overview"
             android:exported="true" />
 
         <activity

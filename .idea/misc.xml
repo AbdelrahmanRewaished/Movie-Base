@@ -3,9 +3,16 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/ASH20/StudioProjects/Movies-App/app/src/main/res/layout/activity_introductory.xml" value="0.1585144927536232" />
         <entry key="..\:/Users/pc/AndroidStudioProjects/Movies-App/app/src/main/res/layout/activity_introductory.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/pc/AndroidStudioProjects/Movies-App/app/src/main/res/layout/movie_button_sample.xml" value="0.33" />
         <entry key="..\:/Users/pc/AndroidStudioProjects/Movies-App/app/src/main/res/xml/style.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/pc/StudioProjects/Movies-App/app/src/main/res/drawable/ic_launcher_background.xml" value="0.131" />
+        <entry key="..\:/Users/pc/StudioProjects/Movies-App/app/src/main/res/layout/activity_introductory.xml" value="0.12552083333333333" />
+        <entry key="..\:/Users/pc/StudioProjects/Movies-App/app/src/main/res/layout/activity_main.xml" value="0.25" />
+        <entry key="..\:/Users/pc/StudioProjects/Movies-App/app/src/main/res/layout/activity_movie_overview.xml" value="0.27291666666666664" />
+        <entry key="..\:/Users/pc/StudioProjects/Movies-App/app/src/main/res/layout/display_recyclerview_sample.xml" value="0.27291666666666664" />
+        <entry key="..\:/Users/pc/StudioProjects/Movies-App/app/src/main/res/layout/movie_button_sample.xml" value="0.5" />
         <entry key="..\:/Users/user/AndroidStudioProjects/MoviesApp/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.1895" />
         <entry key="..\:/Users/user/AndroidStudioProjects/MoviesApp/app/src/main/res/drawable/ic_launcher_background.xml" value="0.1895" />
         <entry key="..\:/Users/user/AndroidStudioProjects/MoviesApp/app/src/main/res/layout/activity_introductory.xml" value="0.18802083333333333" />
