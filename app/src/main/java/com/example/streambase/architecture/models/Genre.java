@@ -1,6 +1,32 @@
-package com.example.moviesapp.architecture.models;
+package com.example.streambase.architecture.models;
+
+
+import androidx.room.Entity;
+import androidx.room.ForeignKey;
+
+@Entity(tableName = "streamGenres", primaryKeys = {"genre_id", "stream_id"},
+        foreignKeys = {@ForeignKey(entity = Stream.class,
+                    parentColumns = "id",
+                    childColumns = "stream_id",
+                    onDelete = ForeignKey.CASCADE)})
 
 public class Genre {
+
+    private int genre_id;
+    private int stream_id;
+
+    public Genre(int genre_id, int stream_id) {
+        this.genre_id = genre_id;
+        this.stream_id = stream_id;
+    }
+
+    public int getGenre_id() {
+        return genre_id;
+    }
+
+    public int getStream_id() {
+        return stream_id;
+    }
 
     public static String getGenre(int id) {
         switch(id) {
@@ -23,7 +49,7 @@ public class Genre {
             case 53: return "Thriller";
             case 10752: return "War";
             case 37: return "Western";
-            default: return null;
+            default: return "";
         }
     }
 

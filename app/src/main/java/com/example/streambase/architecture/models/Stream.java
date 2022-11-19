@@ -1,13 +1,16 @@
-package com.example.moviesapp.architecture.models;
+package com.example.streambase.architecture.models;
 
+import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class Stream {
+@Entity(tableName = "streams")
+public class Stream implements Serializable {
 
     @PrimaryKey
     private int id;
@@ -24,6 +27,8 @@ public class Stream {
 
     public Stream(int id, String overview, float vote_average, String poster_path) {
         this.id = id;
+        if(overview == null)
+            overview = "Not Found";
         this.overview = overview;
         this.vote_average = vote_average;
         this.poster_path = poster_path;
@@ -47,22 +52,21 @@ public class Stream {
 
     public int[] getGenres() { return genres; }
 
-    public void setGenres(int[] genres) {
-        this.genres = genres;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Stream)) return false;
         Stream stream = (Stream) o;
-        return id == stream.id && Float.compare(stream.vote_average, vote_average) == 0 && overview.equals(stream.overview) && poster_path.equals(stream.poster_path);
+        try {
+            return id == stream.id && Float.compare(stream.vote_average, vote_average) == 0 && overview.equals(stream.overview) && poster_path.equals(stream.poster_path);
+        }catch (NullPointerException e) {
+            return false;
+        }
     }
 
     @Override
     public int hashCode() {
         return Objects.hash(id,  overview, vote_average, poster_path);
     }
-
 
 }

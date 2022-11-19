@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--suppress ALL -->
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="730dp"
+    android:background="#202120"
+    android:orientation="vertical"
+    tools:context=".views.SearchFragment">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <Button
+            android:id="@+id/movieButton"
+            android:layout_width="121dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="35dp"
+            android:text="Movies"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            app:backgroundTint="#202120"
+            app:iconTint="#fafcfa"
+            app:layout_constraintBottom_toBottomOf="@+id/TVButton"
+            app:layout_constraintEnd_toStartOf="@+id/TVButton"
+            app:layout_constraintHorizontal_bias="0.616"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="1.0" />
+
+        <Button
+            android:id="@+id/TVButton"
+            android:layout_width="121dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="25dp"
+            android:layout_marginEnd="80dp"
+            android:text="Tv Shows"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            app:backgroundTint="#202120"
+            app:iconTint="#fafcfa"
+            app:layout_constraintBottom_toBottomOf="@+id/movieButton"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="1.0" />
+
+        <ImageButton
+            android:id="@+id/search_button"
+            android:layout_width="50dp"
+            android:layout_height="48dp"
+            android:layout_marginEnd="24dp"
+            android:layout_marginTop="25dp"
+            android:contentDescription="TODO"
+            android:scaleType="fitCenter"
+            android:src="@drawable/search"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/TVButton" />
+
+        <EditText
+            android:id="@+id/search_bar"
+            android:layout_width="283dp"
+            android:layout_height="45dp"
+            android:textColor="#fafcfa"
+            android:layout_marginTop="25dp"
+            app:layout_constraintBottom_toBottomOf="@+id/search_button"
+            app:layout_constraintEnd_toStartOf="@+id/search_button"
+            app:layout_constraintHorizontal_bias="0.545"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/movieButton"
+            app:layout_constraintVertical_bias="1.0" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/search_recyclerview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="60dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/search_bar"
+            app:layout_constraintVertical_bias="0.11" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</ScrollView>

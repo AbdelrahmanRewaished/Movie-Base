@@ -1,4 +1,4 @@
-package com.example.moviesapp;
+package com.example.streambase;
 
 import org.junit.Test;
 

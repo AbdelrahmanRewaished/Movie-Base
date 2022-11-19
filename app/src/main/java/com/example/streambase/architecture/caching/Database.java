@@ -1,25 +1,19 @@
-package com.example.moviesapp.architecture.caching;
+package com.example.streambase.architecture.caching;
 
 import android.content.Context;
 
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
-import com.example.moviesapp.architecture.models.Movie;
-import com.example.moviesapp.architecture.models.Stream;
-import com.example.moviesapp.architecture.models.TVSeries;
+import com.example.streambase.architecture.models.Genre;
+import com.example.streambase.architecture.models.Movie;
+import com.example.streambase.architecture.models.Stream;
+import com.example.streambase.architecture.models.TVSeries;
 
-import java.io.File;
-
-@androidx.room.Database(entities = {Movie.class, TVSeries.class}, version = 1)
+@androidx.room.Database(entities = {Stream.class ,Movie.class, TVSeries.class, Genre.class}, version = 2)
 public abstract class Database extends RoomDatabase{
 
     private static volatile Database database;
-
-    public static boolean DatabaseExists(Context context) {
-        File dbFile = context.getDatabasePath("streams_database");
-        return dbFile.exists();
-    }
 
     public abstract Dao dao();
 
