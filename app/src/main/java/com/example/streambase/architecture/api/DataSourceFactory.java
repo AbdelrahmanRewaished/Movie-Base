@@ -1,9 +1,7 @@
-package com.example.streambase.architecture;
+package com.example.streambase.architecture.api;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
-
-import com.example.streambase.architecture.api.DataSource;
 
 @SuppressWarnings("ALL")
 public class DataSourceFactory extends androidx.paging.DataSource.Factory {
@@ -17,6 +15,7 @@ public class DataSourceFactory extends androidx.paging.DataSource.Factory {
 
     public DataSourceFactory(char streamType, String streamState, String searchQuery) {
         super();
+        dataSource = new DataSource(streamType, streamState, searchQuery);
         this.streamType = streamType;
         this.streamState = streamState;
         this.searchQuery = searchQuery;

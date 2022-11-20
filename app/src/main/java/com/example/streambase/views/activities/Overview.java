@@ -1,4 +1,4 @@
-package com.example.streambase.views;
+package com.example.streambase.views.activities;
 
 import android.os.Bundle;
 import android.widget.ImageButton;
@@ -17,10 +17,14 @@ import com.example.streambase.architecture.models.Movie;
 import com.example.streambase.architecture.models.Stream;
 import com.example.streambase.architecture.models.TVSeries;
 
+import java.util.Arrays;
+import java.util.List;
+
 @SuppressWarnings("FieldCanBeLocal")
 public class Overview extends AppCompatActivity {
 
     private static ViewModel viewModel;
+    private boolean isCached;
     private ImageView view_imageView;
     private TextView view_title;
     private RatingBar view_ratingBar;
@@ -29,7 +33,7 @@ public class Overview extends AppCompatActivity {
     private TextView genres;
     private ImageButton backButton;
 
-    private static Stream stream;
+    private Stream stream;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +56,7 @@ public class Overview extends AppCompatActivity {
         backButton = findViewById(R.id.backButton);
         backButton.setOnClickListener(v -> finish());
         stream = (Stream) getIntent().getSerializableExtra(MainActivity.EXTRA_STREAM);
-
+        isCached = getIntent().getBooleanExtra(MainActivity.EXTRA_ISCHACHED, false);
     }
     private void setStreamCachingState() {
         if(viewModel.contains(stream))
@@ -81,12 +85,14 @@ public class Overview extends AppCompatActivity {
 
         view_overview.setText(stream.getOverview());
         view_ratingBar.setRating((float)(stream.getVote_average() / 2.0));
+
         fillGenres();
     }
 
     private void fillGenres() {
         StringBuilder sb = new StringBuilder();
-        for(int genre_id: stream.getGenres()) {
+        List<Integer> genresList = isCached ? viewModel.getGenres(stream.getId()): Arrays.asList(stream.getGenres());
+        for(int genre_id: genresList) {
             sb.append(Genre.getGenre(genre_id)).append("    ");
         }
         genres.setText(sb.toString());

@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     app:layout_constraintHorizontal_bias="0.0"
     app:layout_constraintStart_toStartOf="parent"
-    tools:context=".views.MainActivity">
+    tools:context=".views.activities.MainActivity">
 
 
     <FrameLayout

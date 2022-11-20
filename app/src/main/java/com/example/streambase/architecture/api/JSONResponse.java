@@ -27,7 +27,4 @@ class SeriesJSONResponse {
         return series;
     }
 
-    public void setSeries(TVSeries[] series) {
-        this.series = series;
-    }
 }

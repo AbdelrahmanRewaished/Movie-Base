@@ -7,7 +7,7 @@
     android:layout_height="730dp"
     android:background="#202120"
     android:orientation="vertical"
-    tools:context=".views.SearchFragment">
+    tools:context=".views.fragments.SearchFragment">
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -81,6 +81,21 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/search_bar"
             app:layout_constraintVertical_bias="0.11" />
+
+        <TextView
+            android:id="@+id/search_page_message"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Results Not found"
+            android:textColor="#fafcfa"
+            android:textSize="25sp"
+            android:layout_marginTop="132dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.489"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/search_bar"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 

@@ -1,4 +1,4 @@
-package com.example.streambase.views;
+package com.example.streambase.views.recyclerview_adapters;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -21,6 +21,8 @@ import com.example.streambase.architecture.api.API;
 import com.example.streambase.architecture.models.Movie;
 import com.example.streambase.architecture.models.Stream;
 import com.example.streambase.architecture.models.TVSeries;
+import com.example.streambase.views.activities.MainActivity;
+import com.example.streambase.views.activities.Overview;
 
 @SuppressWarnings("ALL")
 public class SubAdapter extends PagedListAdapter<Stream, SubAdapter.SubViewHolder> {
@@ -51,7 +53,7 @@ public class SubAdapter extends PagedListAdapter<Stream, SubAdapter.SubViewHolde
     @NonNull
     @Override
     public SubViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.movie_button_sample, parent, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.stream_button_sample, parent, false);
         return new SubViewHolder(view);
     }
 
@@ -87,10 +89,10 @@ public class SubAdapter extends PagedListAdapter<Stream, SubAdapter.SubViewHolde
     }
 
     static class SubViewHolder extends RecyclerView.ViewHolder{
-        private ImageButton streamImage;
-        private TextView title;
-        private TextView date;
-        private TextView rating;
+        ImageButton streamImage;
+        TextView title;
+        TextView date;
+        TextView rating;
 
         public SubViewHolder(@NonNull View itemView) {
             super(itemView);

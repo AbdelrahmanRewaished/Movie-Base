@@ -5,10 +5,8 @@ import android.app.Application;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
-import androidx.paging.LivePagedListBuilder;
-import androidx.paging.PagedList;
 
-import com.example.streambase.architecture.api.DataSource;
+import com.example.streambase.architecture.api.DataSourceFactory;
 import com.example.streambase.architecture.models.Movie;
 import com.example.streambase.architecture.models.Stream;
 import com.example.streambase.architecture.models.TVSeries;
@@ -30,41 +28,38 @@ public class ViewModel extends AndroidViewModel{
         setRepository();
     }
 
-     private void setRepository() {
+    private void setRepository() {
         ExecutorService thread = Executors.newSingleThreadExecutor();
         repository = new Repository(application.getApplicationContext(), thread);
     }
+
     public void insert(Stream stream) {
         repository.insert(stream);
     }
-    public LiveData<List<Movie>> getSavedMovies() {
+
+    public List<Movie> getSavedMovies() {
         return repository.getSavedMovies();
     }
     public void delete(Stream stream) {repository.delete(stream);}
+
     public boolean contains(Stream stream) {return repository.contains(stream);}
-    public LiveData<List<TVSeries>> getSavedSeries() {return repository.getSavedSeries();}
+
+    public List<TVSeries> getSavedSeries() {return repository.getSavedSeries();}
+
     public List<Integer> getGenres(int stream_id) {return repository.getGenres(stream_id);}
 
-    public LiveData getMainPagedList(char streamType, String streamState) {
-
-        dataSourceFactory = new DataSourceFactory(streamType, streamState, null);
-        return getPagedList(dataSourceFactory);
+    public LiveData getHomePagedList(char streamType, String streamState) {
+        return repository.getHomePagedList(streamType, streamState);
     }
 
     public LiveData getSearchPagedList(char streamType, String searchQuery) {
 
-        dataSourceFactory = new DataSourceFactory(streamType, null, searchQuery);
-        return getPagedList(dataSourceFactory);
+        return repository.getSearchPagedList(streamType, searchQuery);
     }
 
-    private LiveData getPagedList(DataSourceFactory dataSourceFactory) {
-        PagedList.Config config = (new PagedList.Config.Builder()).setEnablePlaceholders(false)
-                .setPageSize(DataSource.PAGE_SIZE)
-                .build();
-
-        return (new LivePagedListBuilder<>(dataSourceFactory, config)).build();
-    }
     public boolean isSuccessfulConnection() {
-        return dataSourceFactory.isSuccessfulConnection();
+        return repository.isSuccessfulConnection();
     }
+
+
 }

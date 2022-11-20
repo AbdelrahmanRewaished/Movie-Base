@@ -25,7 +25,7 @@ public class DataSource extends PageKeyedDataSource<Integer, Stream> {
     private String streamState;
     private String searchQuery;
 
-    public DataSource(char streamType, String streamState, String searchQuery) {
+    DataSource(char streamType, String streamState, String searchQuery) {
         super();
         this.streamType = streamType;
         this.streamState = streamState;
@@ -97,7 +97,7 @@ public class DataSource extends PageKeyedDataSource<Integer, Stream> {
 
     }
 
-    public boolean isSuccessfulConnection() {
+    boolean isSuccessfulConnection() {
         return successfulConnection;
     }
 

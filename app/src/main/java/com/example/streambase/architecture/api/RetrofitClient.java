@@ -1,6 +1,6 @@
 package com.example.streambase.architecture.api;
 
-import com.example.streambase.views.MainActivity;
+import com.example.streambase.views.activities.MainActivity;
 
 import retrofit2.Call;
 import retrofit2.Retrofit;

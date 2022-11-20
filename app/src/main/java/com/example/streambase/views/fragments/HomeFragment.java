@@ -1,4 +1,4 @@
-package com.example.streambase.views;
+package com.example.streambase.views.fragments;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -21,7 +21,12 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.example.streambase.R;
 import com.example.streambase.architecture.ViewModel;
 import com.example.streambase.architecture.models.Stream;
+import com.example.streambase.views.DisplaySample;
+import com.example.streambase.views.activities.MainActivity;
+import com.example.streambase.views.recyclerview_adapters.MainAdapter;
+import com.example.streambase.views.recyclerview_adapters.SubAdapter;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
@@ -31,6 +36,7 @@ import java.util.concurrent.TimeUnit;
  * Use the {@link HomeFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
+
 @SuppressWarnings("ALL")
 public class HomeFragment extends Fragment {
 
@@ -49,21 +55,18 @@ public class HomeFragment extends Fragment {
    private boolean adapterSet;
    private TextView watchNowText;
 
+   private static final int STREAM_SAMPLE_SIZE = 7;
+
     public HomeFragment() {
         // Required empty public constructor
     }
 
     public HomeFragment(MainActivity mainActivity) {
         HomeFragment.mainActivity =  mainActivity;
-        initializeComponents();
     }
 
-    private void initializeComponents() {
-        this.context = mainActivity.getApplicationContext();
-        this.displaySamples = mainActivity.getDisplaySampleList();
-        this.viewModel = mainActivity.getViewModel();
-        this.subAdapters = mainActivity.getSubAdapters();
-    }
+
+
     public static HomeFragment newInstance() {return new HomeFragment();}
 
     @Override
@@ -82,21 +85,35 @@ public class HomeFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        initializeComponents();
+        initializeComponents(view);
+        setActions(view);
 
+    }
+
+    private void initializeComponents(View view) {
+        this.context = mainActivity.getApplicationContext();
+        this.displaySamples = new ArrayList<>();
+        this.viewModel = mainActivity.getViewModel();
+        this.subAdapters = new ArrayList<>();
         searchButton = view.findViewById(R.id.search_main_button);
         watchNowText = view.findViewById(R.id.watch_now_text);
         errorText = view.findViewById(R.id.error_text);
-        searchButton.setOnClickListener(v -> {
-            FragmentTransaction fragmentTransaction = mainActivity.getSupportFragmentManager().beginTransaction();
-            fragmentTransaction.replace(R.id.flFragment, new SearchFragment(context, viewModel, mainActivity));
-            fragmentTransaction.commit();
-        });
-
         swipeRefreshLayout = view.findViewById(R.id.home_fragment);
+    }
+
+    private void setActions(View view) {
+
+        searchButton.setOnClickListener(v -> {
+                    FragmentTransaction fragmentTransaction = mainActivity.getSupportFragmentManager().beginTransaction();
+                    fragmentTransaction.replace(R.id.flFragment, new SearchFragment(context, viewModel, mainActivity));
+                    fragmentTransaction.commit();
+                }
+        );
 
         executor = new ScheduledThreadPoolExecutor(1);
         swipeRefreshLayout.setOnRefreshListener(() -> reloadStreamsData(0));
+
+        setMainStreams();
 
         buildMainRecyclerView(view);
         reloadStreamsData(0);
@@ -124,7 +141,7 @@ public class HomeFragment extends Fragment {
             SubAdapter adapter = subAdapters.get(i);
             char streamType = displaySamples.get(i).getStreamType().charAt(0);
             String streamState = displaySamples.get(i).getStreamStateOriginal();
-            viewModel.getMainPagedList(streamType, streamState).observe(getViewLifecycleOwner(), (Observer<PagedList<Stream>>) adapter::submitList);
+            viewModel.getHomePagedList(streamType, streamState).observe(getViewLifecycleOwner(), (Observer<PagedList<Stream>>) adapter::submitList);
         }
         executor.schedule(() -> mainActivity.runOnUiThread(() -> {
             if(! viewModel.isSuccessfulConnection()) {
@@ -138,6 +155,21 @@ public class HomeFragment extends Fragment {
             }
         }), 500, TimeUnit.MILLISECONDS);
 
+    }
+
+    private void setMainStreams() {
+        displaySamples.add(new DisplaySample('M', "now_playing"));
+        displaySamples.add(new DisplaySample('M', "popular"));
+        displaySamples.add(new DisplaySample('M', "top_rated"));
+        displaySamples.add(new DisplaySample('M', "upcoming"));
+        displaySamples.add(new DisplaySample('T', "airing_today"));
+        displaySamples.add(new DisplaySample('T', "popular"));
+        displaySamples.add(new DisplaySample('T', "top_rated"));
+
+        for (int i = 0; i < STREAM_SAMPLE_SIZE; i++) {
+            SubAdapter adapter = new SubAdapter(context, viewModel);
+            subAdapters.add(adapter);
+        }
     }
 
     private void setConnectionError(boolean errorExisting) {

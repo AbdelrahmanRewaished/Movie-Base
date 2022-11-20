@@ -10,7 +10,7 @@ import com.example.streambase.architecture.models.Movie;
 import com.example.streambase.architecture.models.Stream;
 import com.example.streambase.architecture.models.TVSeries;
 
-@androidx.room.Database(entities = {Stream.class ,Movie.class, TVSeries.class, Genre.class}, version = 2)
+@androidx.room.Database(entities = {Stream.class ,Movie.class, TVSeries.class, Genre.class}, version = 2, exportSchema = false)
 public abstract class Database extends RoomDatabase{
 
     private static volatile Database database;

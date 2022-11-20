@@ -1,4 +1,4 @@
-package com.example.streambase.views;
+package com.example.streambase.views.fragments;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -24,6 +25,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.streambase.R;
 import com.example.streambase.architecture.ViewModel;
 import com.example.streambase.architecture.models.Stream;
+import com.example.streambase.views.recyclerview_adapters.SubAdapter;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -38,6 +40,10 @@ public class SearchFragment extends Fragment implements TextWatcher {
     private ViewModel viewModel;
     private LifecycleOwner owner;
     private Button movieSearch, tv_showSearch;
+    private RecyclerView searchRecyclerview;
+    private ImageButton searchButton;
+    private TextView pageMessage;
+
     private char streamType;
     private SubAdapter subAdapter;
     EditText searchBar;
@@ -69,38 +75,62 @@ public class SearchFragment extends Fragment implements TextWatcher {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        initializeComponents(view);
+        setActions();
+    }
+
+    private void initializeComponents(View view) {
         subAdapter = new SubAdapter(context, viewModel);
-        RecyclerView searchRecyclerview = view.findViewById(R.id.search_recyclerview);
+        searchRecyclerview = view.findViewById(R.id.search_recyclerview);
+
+        searchBar = view.findViewById(R.id.search_bar);
+
+        searchButton = view.findViewById(R.id.search_button);
+
+        movieSearch = view.findViewById(R.id.movieButton);
+
+        pageMessage = view.findViewById(R.id.search_page_message);
+
+        tv_showSearch = view.findViewById(R.id.TVButton);
+    }
+
+    private void setActions() {
+        pageMessage.setVisibility(View.GONE);
+
+        movieSearch.setEnabled(false);
+
+        streamType = 'M';
+
         searchRecyclerview.setLayoutManager(new GridLayoutManager(context, 2));
         searchRecyclerview.setAdapter(subAdapter);
 
-        searchBar = view.findViewById(R.id.search_bar);
         searchBar.addTextChangedListener(this);
 
-        ImageButton searchButton = view.findViewById(R.id.search_button);
         searchButton.setOnClickListener(v -> updateSearchRecyclerView(searchBar.getText().toString()));
 
-        movieSearch = view.findViewById(R.id.movieButton);
-        movieSearch.setEnabled(false);
-        tv_showSearch = view.findViewById(R.id.TVButton);
-        streamType = 'M';
-        movieSearch.setOnClickListener(v -> {
-            movieSearch.setEnabled(false);
-            tv_showSearch.setEnabled(true);
-            streamType = 'M';
-        });
-
-        tv_showSearch.setOnClickListener(v -> {
-            tv_showSearch.setEnabled(false);
-            movieSearch.setEnabled(true);
-            streamType = 'T';
-        });
+        setButtonAction(movieSearch);
+        setButtonAction(tv_showSearch);
     }
 
+
+    private void setButtonAction(Button button) {
+        boolean isMovie = button == movieSearch;
+        button.setOnClickListener(v -> {
+            movieSearch.setEnabled(! isMovie);
+            tv_showSearch.setEnabled(isMovie);
+            streamType = isMovie? 'M': 'T';
+        });
+    }
     @SuppressLint("NotifyDataSetChanged")
     private void updateSearchRecyclerView(String searchQuery) {
         viewModel.getSearchPagedList(streamType, searchQuery).observe(owner, (Observer<PagedList<Stream>>) subAdapter::submitList);
         subAdapter.notifyDataSetChanged();
+
+        if(subAdapter.getCurrentList().isEmpty())
+            pageMessage.setVisibility(View.VISIBLE);
+        else
+            pageMessage.setVisibility(View.GONE);
+
     }
 
     @Override

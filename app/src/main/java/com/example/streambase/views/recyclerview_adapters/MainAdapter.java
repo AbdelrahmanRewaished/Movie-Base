@@ -1,4 +1,4 @@
-package com.example.streambase.views;
+package com.example.streambase.views.recyclerview_adapters;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -16,6 +16,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.streambase.R;
+import com.example.streambase.views.DisplaySample;
+import com.example.streambase.views.fragments.DetailsFragment;
 
 import java.io.Serializable;
 import java.util.List;

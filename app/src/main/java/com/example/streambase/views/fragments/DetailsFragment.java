@@ -1,4 +1,4 @@
-package com.example.streambase.views;
+package com.example.streambase.views.fragments;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.streambase.R;
+import com.example.streambase.views.recyclerview_adapters.SubAdapter;
 
 /**
  * A simple {@link Fragment} subclass.

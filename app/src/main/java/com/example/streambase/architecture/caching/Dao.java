@@ -1,6 +1,5 @@
 package com.example.streambase.architecture.caching;
 
-import androidx.lifecycle.LiveData;
 import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
@@ -32,10 +31,10 @@ public interface Dao {
     boolean containsStream(int id);
 
     @Query("SELECT * FROM movies ORDER BY vote_average DESC")
-    LiveData<List<Movie>> getSavedMovies();
+    List<Movie> getSavedMovies();
 
     @Query("SELECT * FROM tv_series ORDER BY vote_average DESC")
-    LiveData<List<TVSeries>> getSavedSeries();
+    List<TVSeries> getSavedSeries();
 
     @Insert
     void insertGenre(Genre genre);

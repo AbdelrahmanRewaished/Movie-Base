@@ -18,7 +18,7 @@
         android:theme="@style/Theme.Streambase"
         tools:targetApi="31">
         <activity
-            android:name=".views.IntroductoryActivity"
+            android:name=".views.activities.IntroductoryActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -27,10 +27,10 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".views.Overview"
+            android:name=".views.activities.Overview"
             android:exported="true" />
         <activity
-            android:name=".views.MainActivity"
+            android:name=".views.activities.MainActivity"
             android:exported="true" />
     </application>
 

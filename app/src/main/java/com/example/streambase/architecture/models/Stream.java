@@ -23,7 +23,7 @@ public class Stream implements Serializable {
 
     @Ignore
     @SerializedName("genre_ids")
-    private int[] genres;
+    private Integer[] genres;
 
     public Stream(int id, String overview, float vote_average, String poster_path) {
         this.id = id;
@@ -50,7 +50,7 @@ public class Stream implements Serializable {
         return poster_path;
     }
 
-    public int[] getGenres() { return genres; }
+    public Integer[] getGenres() { return genres; }
 
     @Override
     public boolean equals(Object o) {

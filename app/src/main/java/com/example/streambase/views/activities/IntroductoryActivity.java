@@ -1,4 +1,4 @@
-package com.example.streambase.views;
+package com.example.streambase.views.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
