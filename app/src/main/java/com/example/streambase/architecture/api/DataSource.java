@@ -90,7 +90,6 @@ public class DataSource extends PageKeyedDataSource<Integer, Stream> {
                     @Override
                     public void onFailure(Call call, Throwable t) {
                         successfulConnection = false;
-                        System.out.println("Network Failure");
                     }
                 });
 
