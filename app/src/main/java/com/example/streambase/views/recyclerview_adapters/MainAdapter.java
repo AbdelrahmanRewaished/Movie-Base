@@ -24,10 +24,10 @@ import java.util.List;
 
 public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MainViewHolder> implements Serializable {
 
-    private List<DisplaySample> samples;
-    private Context context;
-    private List<SubAdapter> subAdapters;
-    private FragmentManager fragmentManager;
+    private final List<DisplaySample> samples;
+    private final Context context;
+    private final List<SubAdapter> subAdapters;
+    private final FragmentManager fragmentManager;
 
     public MainAdapter(Context context, List<DisplaySample> samples, List<SubAdapter> subAdapters, FragmentManager manager) {
         this.context = context;
@@ -51,7 +51,7 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MainViewHolder
         buildSubRecyclerView(holder.recyclerView, subAdapters.get(position));
 
         holder.viewDetails.setOnClickListener(v -> replaceFragment(new DetailsFragment(context, subAdapters.get(position), sample.getStreamState(),
-                sample.getStreamType())));
+            sample.getStreamType())));
     }
 
     @SuppressLint("NotifyDataSetChanged")
@@ -73,10 +73,10 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MainViewHolder
 
 
     static class MainViewHolder extends RecyclerView.ViewHolder implements Serializable{
-        private TextView streamState_view;
-        private TextView streamType_view;
-        private RecyclerView recyclerView;
-        private ImageButton viewDetails;
+        private final TextView streamState_view;
+        private final TextView streamType_view;
+        private final RecyclerView recyclerView;
+        private final ImageButton viewDetails;
 
         public MainViewHolder(@NonNull View itemView) {
             super(itemView);

@@ -30,6 +30,7 @@ public class DataSource extends PageKeyedDataSource<Integer, Stream> {
         this.streamType = streamType;
         this.streamState = streamState;
         this.searchQuery = searchQuery;
+        this.successfulConnection = true;
     }
 
     @Override
@@ -42,7 +43,6 @@ public class DataSource extends PageKeyedDataSource<Integer, Stream> {
                     public void onResponse(Call call, Response response) {
                         Integer key = loadParams.key < TOTAL_PAGES ? loadParams.key + 1: null;
                         loadStreams(response, loadCallback, streamType, key);
-                        successfulConnection = true;
                     }
                     @Override
                     public void onFailure(Call call, Throwable t) {
@@ -61,7 +61,6 @@ public class DataSource extends PageKeyedDataSource<Integer, Stream> {
                     public void onResponse(Call call, Response response) {
                         Integer key = loadParams.key > 1 ? loadParams.key - 1: null;
                         loadStreams(response, loadCallback, streamType, key);
-                        successfulConnection = true;
                     }
 
                     @Override
@@ -84,13 +83,11 @@ public class DataSource extends PageKeyedDataSource<Integer, Stream> {
                                                         ((MovieJSONResponse)response.body()).getMovies():
                                                         ((SeriesJSONResponse)response.body()).getSeries())
                                         , null, FIRST_PAGE + 1);
-                            successfulConnection = true;
                         }
                     }
                     @Override
                     public void onFailure(Call call, Throwable t) {
                         successfulConnection = false;
-                        System.out.println("Network Failure");
                     }
                 });
 

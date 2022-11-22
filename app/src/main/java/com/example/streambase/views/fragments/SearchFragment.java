@@ -37,7 +37,7 @@ public class SearchFragment extends Fragment implements TextWatcher {
 
 
     private Context context;
-    private ViewModel viewModel;
+    private static ViewModel viewModel;
     private LifecycleOwner owner;
     private Button movieSearch, tv_showSearch;
     private RecyclerView searchRecyclerview;
@@ -54,7 +54,7 @@ public class SearchFragment extends Fragment implements TextWatcher {
 
     public SearchFragment(Context context, ViewModel viewModel, LifecycleOwner owner) {
         this.context = context;
-        this.viewModel = viewModel;
+        SearchFragment.viewModel = viewModel;
         this.owner = owner;
     }
 

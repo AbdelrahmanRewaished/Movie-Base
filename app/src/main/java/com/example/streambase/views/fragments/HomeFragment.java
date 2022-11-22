@@ -26,7 +26,6 @@ import com.example.streambase.views.activities.MainActivity;
 import com.example.streambase.views.recyclerview_adapters.MainAdapter;
 import com.example.streambase.views.recyclerview_adapters.SubAdapter;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
@@ -41,10 +40,9 @@ import java.util.concurrent.TimeUnit;
 public class HomeFragment extends Fragment {
 
 
-
    private List<SubAdapter> subAdapters;
    private List<DisplaySample> displaySamples;
-   private ViewModel viewModel;
+   private static ViewModel viewModel;
    private Context context;
    private RecyclerView mainRecyclerView;
    private SwipeRefreshLayout swipeRefreshLayout;
@@ -55,7 +53,7 @@ public class HomeFragment extends Fragment {
    private boolean adapterSet;
    private TextView watchNowText;
 
-   private static final int STREAM_SAMPLE_SIZE = 7;
+   public static final int STREAM_SAMPLE_SIZE = 7;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -92,9 +90,12 @@ public class HomeFragment extends Fragment {
 
     private void initializeComponents(View view) {
         this.context = mainActivity.getApplicationContext();
-        this.displaySamples = new ArrayList<>();
-        this.viewModel = mainActivity.getViewModel();
-        this.subAdapters = new ArrayList<>();
+
+        HomeFragment.viewModel = mainActivity.getViewModel();
+
+        this.displaySamples = viewModel.getStreamSections();
+        this.subAdapters = viewModel.getSubAdapters();
+
         searchButton = view.findViewById(R.id.search_main_button);
         watchNowText = view.findViewById(R.id.watch_now_text);
         errorText = view.findViewById(R.id.error_text);
@@ -113,7 +114,6 @@ public class HomeFragment extends Fragment {
         executor = new ScheduledThreadPoolExecutor(1);
         swipeRefreshLayout.setOnRefreshListener(() -> reloadStreamsData(0));
 
-        setMainStreams();
 
         buildMainRecyclerView(view);
         reloadStreamsData(0);
@@ -155,21 +155,6 @@ public class HomeFragment extends Fragment {
             }
         }), 500, TimeUnit.MILLISECONDS);
 
-    }
-
-    private void setMainStreams() {
-        displaySamples.add(new DisplaySample('M', "now_playing"));
-        displaySamples.add(new DisplaySample('M', "popular"));
-        displaySamples.add(new DisplaySample('M', "top_rated"));
-        displaySamples.add(new DisplaySample('M', "upcoming"));
-        displaySamples.add(new DisplaySample('T', "airing_today"));
-        displaySamples.add(new DisplaySample('T', "popular"));
-        displaySamples.add(new DisplaySample('T', "top_rated"));
-
-        for (int i = 0; i < STREAM_SAMPLE_SIZE; i++) {
-            SubAdapter adapter = new SubAdapter(context, viewModel);
-            subAdapters.add(adapter);
-        }
     }
 
     private void setConnectionError(boolean errorExisting) {

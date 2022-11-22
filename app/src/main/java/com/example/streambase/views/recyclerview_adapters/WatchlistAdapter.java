@@ -1,5 +1,6 @@
 package com.example.streambase.views.recyclerview_adapters;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -21,14 +22,14 @@ import com.example.streambase.views.activities.Overview;
 
 import java.util.List;
 
-@SuppressWarnings("ALL")
+
 public class WatchlistAdapter extends RecyclerView.Adapter<SubAdapter.SubViewHolder> {
 
     private List<Movie> movies;
     private List<TVSeries> tvShows;
-    private Context context;
-    private ViewModel viewModel;
-    private boolean isMovie;
+    private final Context context;
+    private final ViewModel viewModel;
+    private final boolean isMovie;
     public WatchlistAdapter(Context context, ViewModel viewModel, boolean isMovie) {
         this.viewModel = viewModel;
         this.context = context;
@@ -48,6 +49,7 @@ public class WatchlistAdapter extends RecyclerView.Adapter<SubAdapter.SubViewHol
         return new SubAdapter.SubViewHolder(view);
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull SubAdapter.SubViewHolder holder, int position) {
         Stream current_stream = isMovie ? movies.get(position): tvShows.get(position);

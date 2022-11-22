@@ -35,6 +35,8 @@ public class MainActivity extends AppCompatActivity {
 
         initializeComponents();
 
+        android.app.FragmentManager fragmentManager = getFragmentManager();
+
         binding.bottomNavView.setOnItemSelectedListener(item -> {
             switch(item.getItemId()) {
                 case R.id.home:
@@ -47,8 +49,9 @@ public class MainActivity extends AppCompatActivity {
             return true;
         });
 
-        if(savedInstanceState == null)
+        if(savedInstanceState == null) {
             replaceFragment(new HomeFragment(this));
+        }
     }
 
     private void replaceFragment(Fragment fragment) {

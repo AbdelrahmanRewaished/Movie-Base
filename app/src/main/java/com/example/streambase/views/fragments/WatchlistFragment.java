@@ -29,14 +29,14 @@ public class WatchlistFragment extends Fragment {
     private RecyclerView recyclerView;
     private Button movieButton, tvButton;
 
-    private Context context;
-    private  ViewModel viewModel;
+    private static Context context;
+    private static ViewModel viewModel;
     private TextView pageMessage;
 
     public WatchlistFragment(Context context, ViewModel viewModel) {
         // Required empty public constructor
-        this.context = context;
-        this.viewModel = viewModel;
+        WatchlistFragment.context = context;
+        WatchlistFragment.viewModel = viewModel;
     }
 
     public WatchlistFragment() {
@@ -86,12 +86,6 @@ public class WatchlistFragment extends Fragment {
         setDefaultActions(movies, true);
     }
 
-    private void buildRecyclerView(WatchlistAdapter adapter) {
-        recyclerView.setAdapter(adapter);
-        adapter.notifyDataSetChanged();
-    }
-
-
     private void setButtonAction(Button button) {
         boolean isMovie = button == movieButton;
 
@@ -116,4 +110,8 @@ public class WatchlistFragment extends Fragment {
         buildRecyclerView(adapter);
     }
 
+    private void buildRecyclerView(WatchlistAdapter adapter) {
+        recyclerView.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
+    }
 }

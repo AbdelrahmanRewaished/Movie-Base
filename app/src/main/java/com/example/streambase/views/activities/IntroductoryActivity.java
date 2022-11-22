@@ -14,7 +14,7 @@ import java.util.concurrent.TimeUnit;
 public class IntroductoryActivity extends AppCompatActivity {
 
     private ImageView imageView;
-    private boolean nextActivityCreated;
+    private static boolean nextActivityCreated;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,12 +29,13 @@ public class IntroductoryActivity extends AppCompatActivity {
     private void startMainActivity() {
         if(nextActivityCreated)
             return;
+
+        nextActivityCreated = true;
         Intent intent = new Intent(this, MainActivity.class);
         imageView.animate().setDuration(1000).setStartDelay(4000).translationX(-1500).start();
         ScheduledThreadPoolExecutor executor = new ScheduledThreadPoolExecutor(1);
         executor.schedule(() -> runOnUiThread(() -> {
             startActivity(intent);
-            nextActivityCreated = true;
             finish();
         }),4000, TimeUnit.MILLISECONDS);
         executor.shutdown();
