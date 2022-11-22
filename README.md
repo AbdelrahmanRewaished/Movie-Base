@@ -6,7 +6,7 @@ Top rated Streams (Movies and TV shows), in addition to enabling them to search 
 
 ## Implementation
 
-Movie Base was implemented using the TMDB API and the Android Jetpack Components consisting of
+Movie Base was implemented using the TMDB API and the MVVM architectural pattern utilizing the Android Jetpack Components consisting of
 
 Architecture Components such as:
 
