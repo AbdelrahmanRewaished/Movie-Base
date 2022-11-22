@@ -27,7 +27,7 @@ UI Components such as:
 2- Recycler Views and Card Views
 
 ## How to use
-Download the apk File existing in the Releases Section on your Mobile 
+Download the apk File from https://github.com/AbdoRewaished/movie-base/releases/download/v1/stream_base.apk
 &
 Enjoy :')
 
