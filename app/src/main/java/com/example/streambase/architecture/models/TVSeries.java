@@ -21,6 +21,8 @@ public class TVSeries extends Stream {
 
     public TVSeries(int id, String overview, float vote_average, String poster_path, String name, String series_release_date) {
         super(id, overview, vote_average, poster_path);
+        if(name == null)
+            name = "Not Found";
         this.name = name;
         this.series_release_date = series_release_date;
     }

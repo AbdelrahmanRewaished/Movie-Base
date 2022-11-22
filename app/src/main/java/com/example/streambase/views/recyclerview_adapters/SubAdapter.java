@@ -80,11 +80,23 @@ public class SubAdapter extends PagedListAdapter<Stream, SubAdapter.SubViewHolde
         holder.rating.setText("" + current_stream.getVote_average());
         if(current_stream instanceof Movie) {
             holder.title.setText(((Movie)current_stream).getTitle());
-            holder.date.setText(((Movie) current_stream).getRelease_date().split("-")[0]);
+
+            String date_text;
+            if(((Movie)current_stream).getRelease_date() == null)
+                date_text = "Not Found";
+            else
+                date_text = ((Movie) current_stream).getRelease_date().split("-")[0];
+            holder.date.setText(date_text);
         }
         else {
             holder.title.setText(((TVSeries)current_stream).getTitle());
-            holder.date.setText(((TVSeries) current_stream).getRelease_date().split("-")[0]);
+
+            String date_text;
+            if(((TVSeries)current_stream).getRelease_date() == null)
+                date_text = "Not Found";
+            else
+                date_text = ((TVSeries) current_stream).getRelease_date().split("-")[0];
+            holder.date.setText(date_text);
         }
     }
 

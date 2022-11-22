@@ -20,6 +20,8 @@ public class Movie extends Stream {
 
     public Movie(int id, String overview, float vote_average, String poster_path, String title, String movie_release_date) {
         super(id, overview, vote_average, poster_path);
+        if(title == null)
+            title = "Not Found";
         this.title = title;
         this.movie_release_date = movie_release_date;
     }
