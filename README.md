@@ -28,7 +28,5 @@ UI Components such as:
 
 ## How to use
 Download the apk File from <a href="https://github.com/AbdoRewaished/movie-base/releases/download/v1/stream_base.apk">here</a>
-&
-Enjoy :')
 
 
