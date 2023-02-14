@@ -4,6 +4,10 @@
 Movie Base is an Android Application that enables users to pick what they desire to watch through a huge library of Trending, Popular and 
 Top rated Streams (Movies and TV shows), in addition to enabling them to search for their favorite Movies or TV shows and Save them to their own Watch list :')
 
+## Video
+
+You can find the Project Demo from <a href="">here</a>
+
 ## Implementation
 
 Movie Base was implemented using the <a href="https://developers.themoviedb.org/3">TMDB API</a> and the MVVM architectural pattern utilizing the Android Jetpack Components consisting of
