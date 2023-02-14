@@ -43,7 +43,13 @@ git clone https://github.com/AbdelrahmanRewaished/Movie-Base/
 
 4- Login in TMDB Website and Register for a TMDB API Key from <a href="https://www.themoviedb.org/settings/api">here</a>
  
-5- Place your API Key in 
+5- Place your API Key in the file res/values/your_file_name.xml and insert the following inside the resources tag 
+```bash
+    <string name="API_KEY">
+      Your API Key
+    </string>
+```
+for more info check the documentation <a href="https://developer.android.com/guide/topics/resources/string-resource#java">here</a>
 
 6- Start Developing
 
